@@ -13,6 +13,18 @@ class User {
   User({required this.id, required this.name, required this.password
     , required this.address, required this.type, required this.token, required this.email });
 
+  factory User.getNewEmpty() {
+    return User(
+      id: '',
+      name: '',
+      password: '',
+      address: '',
+      type: '',
+      token: '',
+      email: '',
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       "id": id,

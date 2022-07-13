@@ -37,11 +37,17 @@ class _AuthScreenState extends State<AuthScreen> {
     _nameTxt.dispose();
   }
 
-  void singUpUser() {
+  void signUpUser() {
     authService.signUpUser(context: context,
         email: _emailTxt.text,
         password: _passwordTxt.text,
         name: _nameTxt.text);
+  }
+
+  void signInUser() {
+    authService.signInUser(context: context,
+        email: _emailTxt.text,
+        password: _passwordTxt.text);
   }
 
   @override
@@ -91,7 +97,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             const SizedBox(height: 10,),
                             CustomButton(text: "Sign Up" , onTap: () {
                               if (_signUpKey.currentState!.validate()) {
-                                singUpUser();
+                                signUpUser();
                               }
                             },
                             )
@@ -118,7 +124,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   padding: const EdgeInsets.all(8),
                   color: Declarations.backgroundColor,
                   child: Form(
-                      key: _signUpKey,
+                      key: _signInKey,
                       child: Column (
                         children: [
                           CustomText(controller: _emailTxt, hinTxt: 'Email',),
@@ -126,6 +132,9 @@ class _AuthScreenState extends State<AuthScreen> {
                           CustomText(controller: _passwordTxt, hinTxt: 'password',),
                           const SizedBox(height: 10,),
                           CustomButton(text: "Sign In" , onTap: () {
+                            if (_signInKey.currentState!.validate()) {
+                              signInUser();
+                            }
                           }, )
                         ],
                       )
