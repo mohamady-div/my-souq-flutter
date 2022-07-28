@@ -1,4 +1,6 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/screens/home_screen.dart';
 import 'package:my_souq/components/declarations.dart';
 
 class BottomBar extends StatefulWidget {
@@ -14,9 +16,22 @@ class _BottomBarState extends State<BottomBar> {
   int _page =0;
   double nbWidth = 42;
 
+  List<Widget> pages = [
+    const HomeScreen(),
+    const Center(child: Text('Account Page'),),
+    const Center(child: Text('Cart Page'),),
+  ];
+
+  void updatePage(int page) {
+    setState(() {
+      _page = page;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         selectedItemColor: Declarations.selectedNavBarColor,
@@ -27,24 +42,28 @@ class _BottomBarState extends State<BottomBar> {
           getNavBottom(
               icon: Icons.home_outlined,
               title: 'Home',
-              index: 0
+              index: 0,
+              ifCart: false
           ),
           getNavBottom(
             icon: Icons.person_outline_outlined,
             title: 'Account',
-            index: 1
+            index: 1,
+            ifCart: false
           ),
           getNavBottom(
-              icon: Icons.shopping_cart_checkout,
+              icon: Icons.shopping_cart,
               title: 'Cart',
-              index: 2
+              index: 2,
+              ifCart: true
           ),
         ],
+        onTap: updatePage,
       ),
     );
   }
 
-  BottomNavigationBarItem getNavBottom({required IconData icon , required String title , required int index }) {
+  BottomNavigationBarItem getNavBottom({required IconData icon , required String title , required int index, required bool ifCart }) {
 
     return BottomNavigationBarItem(icon: Container(
       width: nbWidth,
@@ -59,7 +78,9 @@ class _BottomBarState extends State<BottomBar> {
 
           )
       ),
-      child: Icon(icon),
+      child: ifCart
+          ? Badge(elevation: 0, badgeContent: const Text('2'), badgeColor: Colors.red, child:Icon(icon),)
+          : Icon(icon)
     ),
         label: title
     );
