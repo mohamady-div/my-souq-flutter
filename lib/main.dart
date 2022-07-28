@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/screens/auth_screen.dart';
-import 'package:my_souq/app/screens/home_screen.dart';
 import 'package:my_souq/app/services/auth_service.dart';
+import 'package:my_souq/app/widgets/custom_bottom_bar.dart';
 import 'package:my_souq/providers/user_provider.dart';
 import 'package:my_souq/router.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
             .user
             .token
             .isNotEmpty
-            ? const HomeScreen()
+            ? const BottomBar()
             : const AuthScreen()
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_souq/app/screens/home_screen.dart';
+import 'package:my_souq/app/widgets/custom_bottom_bar.dart';
 import 'package:my_souq/components/declarations.dart';
 import 'package:my_souq/components/error_handling.dart';
 import 'package:my_souq/components/utils.dart';
@@ -66,7 +67,7 @@ class AuthService {
             Provider.of<UserProvider>(context, listen: false).setUser(res.body);
             await preferences.setString("my-souq-auth-token", jsonDecode(res.body)['token']);
             //showSnackBar(context, "Success you are welcome :)");
-            Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
+            Navigator.pushNamedAndRemoveUntil(context, BottomBar.routeName, (route) => false);
           }
       );
     } catch (err) {
