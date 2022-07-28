@@ -73,4 +73,40 @@ class AuthService {
       showSnackBar(context, err.toString());
     }
   }
+
+  void getUserData(BuildContext context) async {
+    try  {
+      SharedPreferences sp = await SharedPreferences.getInstance();
+      String? token = sp.getString('my-souq-auth-token');
+
+      if(token == null) {
+           sp.setString('my-souq-auth-token', '');
+      }
+      
+      var resToken = await http.post(
+          Uri.parse('$myUri01/isValidToken'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=utf-8',
+            'my-souq-auth-token': token!
+          }
+      );
+
+      var response = jsonDecode(resToken.body);
+
+      if (response == true) {
+        http.Response userRes = await http.get(
+            Uri.parse('$myUri01/'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=utf-8',
+              'my-souq-auth-token': token!
+            }
+        );
+
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUser(userRes.body);
+      }
+    } catch(err) {
+      showSnackBar(context, err.toString());
+    }
+  }
 }

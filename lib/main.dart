@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/screens/auth_screen.dart';
+import 'package:my_souq/app/screens/home_screen.dart';
 import 'package:my_souq/app/services/auth_service.dart';
 import 'package:my_souq/providers/user_provider.dart';
 import 'package:my_souq/router.dart';
@@ -30,26 +31,33 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    authService.getUserData(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Souq',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Declarations.backgroundColor,
-        colorScheme: const ColorScheme.light(
-          primary: Declarations.secondaryColor,
+        title: 'My Souq',
+        theme: ThemeData(
+            scaffoldBackgroundColor: Declarations.backgroundColor,
+            colorScheme: const ColorScheme.light(
+              primary: Declarations.secondaryColor,
+            ),
+            appBarTheme: const AppBarTheme(
+                elevation: 0,
+                iconTheme: IconThemeData(
+                    color: Colors.black
+                )
+            )
         ),
-        appBarTheme: const AppBarTheme(
-          elevation: 0,
-          iconTheme: IconThemeData(
-            color: Colors.black
-          )
-        )
-      ),
-      onGenerateRoute: (settings) => generateRoute(settings) ,
-      home: const AuthScreen()
+        onGenerateRoute: (settings) => generateRoute(settings),
+        home: Provider
+            .of<UserProvider>(context)
+            .user
+            .token
+            .isNotEmpty
+            ? const HomeScreen()
+            : const AuthScreen()
     );
   }
 
