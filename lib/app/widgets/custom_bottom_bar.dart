@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/screens/account_screen.dart';
 import 'package:my_souq/app/screens/home_screen.dart';
 import 'package:my_souq/components/declarations.dart';
 
@@ -18,7 +19,7 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> pages = [
     const HomeScreen(),
-    const Center(child: Text('Account Page'),),
+    const AccountScreen(),
     const Center(child: Text('Cart Page'),),
   ];
 
