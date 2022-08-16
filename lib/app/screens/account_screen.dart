@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/widgets/below_app_bar.dart';
+import 'package:my_souq/app/widgets/top_buttons.dart';
 import 'package:my_souq/components/declarations.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -43,6 +44,8 @@ class AccountScreen extends StatelessWidget {
       body: Column(
         children: const [
           BelowAppBar(),
+          SizedBox(height: 10,),
+          TopButtons(),
         ],
       ),
     );
