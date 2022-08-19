@@ -49,6 +49,14 @@ class Declarations {
       'image': 'assets/images/computer.png'
     },
   ];
+
+  static const List<String> carouselImages = [
+    'https://eg.jumia.is/cms/33-22/UNs/Slider-Desktop-EN_-(1).jpg',
+    'https://eg.jumia.is/cms/33-22/NIVEA_SUPER_BRAND_DAY_BANNERS_JUMIA.EG_DESKTOP_SLIDER_712x384_EN.jpg',
+    'https://eg.jumia.is/cms/33-22/UNs/Slider-Desktop-EN_-(2).jpg',
+    'https://eg.jumia.is/cms/33-22/UNs-Deals/Summer-Appliances/EDIT/edit/Summer_Appliances-_Slider-Desktop-EN__copy_4-(2).jpg',
+    'https://eg.jumia.is/cms/ja-22/games/2.gif',
+  ];
 }
 
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/widgets/address_bar.dart';
+import 'package:my_souq/app/widgets/carousal_image.dart';
+import 'package:my_souq/app/widgets/deal_of_day.dart';
 import 'package:my_souq/app/widgets/top_categories.dart';
 import 'package:my_souq/components/declarations.dart';
 import 'package:my_souq/providers/user_provider.dart';
@@ -80,12 +82,18 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        body: Column(
-          children: const [
-            AddressBar(),
-            SizedBox(height: 10,),
-            TopCategories()
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: const [
+              AddressBar(),
+              SizedBox(height: 10,),
+              TopCategories(),
+              SizedBox(height: 10,),
+              CarouselImage(),
+              SizedBox(height: 10,),
+              DealOfDay()
+            ],
+          ),
         )
     );
   }
