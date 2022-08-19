@@ -60,8 +60,6 @@ class _MyAppState extends State<MyApp> {
             : const AuthScreen()
     );
   }
-
-
 }
 
 

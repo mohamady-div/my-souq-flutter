@@ -25,4 +25,30 @@ class Declarations {
   static const Color greyBackgroundColor = Color(0xffdcdcf3);
   static var selectedNavBarColor = const Color.fromARGB(255, 41, 59, 185);
   static const unselectedNavBarColor = Color.fromARGB(255, 0, 0, 0);
+
+
+  static const List<Map<String, String>> catImages = [
+    {
+      'title': 'Mobiles',
+      'image': 'assets/images/mobile.png'
+    },
+    {
+      'title': 'Appliances',
+      'image': 'assets/images/appliance.png'
+    },
+    {
+      'title': 'Fashion',
+      'image': 'assets/images/clothes.png'
+    },
+    {
+      'title': 'Essentials',
+      'image': 'assets/images/essential.png'
+    },
+    {
+      'title': 'Computers',
+      'image': 'assets/images/computer.png'
+    },
+  ];
 }
+
+
