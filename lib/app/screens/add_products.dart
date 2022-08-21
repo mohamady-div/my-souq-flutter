@@ -1,5 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/widgets/custom_button.dart';
+import 'package:my_souq/app/widgets/custom_text.dart';
 import 'package:my_souq/components/declarations.dart';
 
 class AddProduct extends StatefulWidget {
@@ -12,6 +14,23 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
+  TextEditingController productNameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController qtyController = TextEditingController();
+
+  String category = 'Mobiles';
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    productNameController.dispose();
+    descriptionController.dispose();
+    priceController.dispose();
+    qtyController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,6 +79,39 @@ class _AddProductState extends State<AddProduct> {
                       ),
                     )
                 ),
+                const SizedBox(height: 20,),
+                CustomText(controller: productNameController, hinTxt: 'product name'),
+                const SizedBox(height: 10,),
+                CustomText(controller: descriptionController, hinTxt: 'description', maxLines: 4,),
+                const SizedBox(height: 10,),
+                CustomText(controller: priceController, hinTxt: 'price'),
+                const SizedBox(height: 10,),
+                CustomText(controller: qtyController, hinTxt: 'qty'),
+                const SizedBox(height: 10,),
+                SizedBox(
+                  width: double.infinity,
+                  child: DropdownButton(
+                    value: category,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: Declarations.catImages.map((e) {
+                      return DropdownMenuItem(
+                          value: e['title']!,
+                          child: Text(e['title']!),
+                      );
+                    }).toList(),
+                    onChanged: (String? val) {
+                      setState(() {
+                        category = val!;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(height: 10,),
+                CustomButton(
+                    text: "Save",
+                    onTap: () {}
+                ),
+                const SizedBox(height: 10,),
               ],
             ),
           ),
