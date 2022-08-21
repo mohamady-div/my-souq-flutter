@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/screens/posts_screen.dart';
 import 'package:my_souq/components/declarations.dart';
 
 class AdminScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class _AdminScreenState extends State<AdminScreen> {
   double nbWidth = 42;
 
   List<Widget> pages = [
-    const Center(child: Text('Posts Page')),
+    const PostsScreen(),
     const Center(child: Text('Analytics Page')),
     const Center(child: Text('Items Page')),
   ];
