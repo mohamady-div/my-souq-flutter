@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/screens/admin_screen.dart';
 import 'package:my_souq/app/screens/auth_screen.dart';
 import 'package:my_souq/app/services/auth_service.dart';
 import 'package:my_souq/app/widgets/custom_bottom_bar.dart';
@@ -56,7 +57,9 @@ class _MyAppState extends State<MyApp> {
             .user
             .token
             .isNotEmpty
+            ? Provider.of<UserProvider>(context).user.type == 'user'
             ? const BottomBar()
+            : const AdminScreen()
             : const AuthScreen()
     );
   }
