@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/user.dart';
 import 'package:http/http.dart' as http;
-import 'package:my_souq/app/screens/home_screen.dart';
 import 'package:my_souq/app/widgets/custom_bottom_bar.dart';
 import 'package:my_souq/components/declarations.dart';
 import 'package:my_souq/components/error_handling.dart';

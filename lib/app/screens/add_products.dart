@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/services/admin_service.dart';
 import 'package:my_souq/app/widgets/custom_button.dart';
 import 'package:my_souq/app/widgets/custom_text.dart';
 import 'package:my_souq/components/declarations.dart';
@@ -21,6 +22,8 @@ class _AddProductState extends State<AddProduct> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController qtyController = TextEditingController();
+
+  final AdminService adminService = AdminService();
 
   String category = 'Mobiles';
   List<File> images = [];
