@@ -27,6 +27,7 @@ class _AddProductState extends State<AddProduct> {
 
   String category = 'Mobiles';
   List<File> images = [];
+  final _addProductForm = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -45,6 +46,18 @@ class _AddProductState extends State<AddProduct> {
     });
   }
 
+  void addProduct() {
+    if (_addProductForm.currentState!.validate() && images.isNotEmpty) {
+      adminService.saveProduct(context: context,
+          name: productNameController.text,
+          description: descriptionController.text,
+          price: double.parse(priceController.text),
+          qty: double.parse(qtyController.text),
+          category: category,
+          images: images);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +71,7 @@ class _AddProductState extends State<AddProduct> {
       ),
       body: SingleChildScrollView(
         child:Form(
+          key: _addProductForm,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -143,7 +157,7 @@ class _AddProductState extends State<AddProduct> {
                 const SizedBox(height: 10,),
                 CustomButton(
                     text: "Save",
-                    onTap: () {}
+                    onTap: addProduct
                 ),
                 const SizedBox(height: 10,),
               ],
