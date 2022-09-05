@@ -44,8 +44,8 @@ class Product {
     return Product(
       name: json['name'] ?? '',
       description: json['description'] ?? '',
-      price: json['price'] ?? 0.00,
-      qty: json['qty'] ?? 0.00,
+      price: json['price']?.toDouble() ?? 0.00,
+      qty: json['qty']?.toDouble() ?? 0.00,
       category: json['category'] ?? '',
       images: List<String>.from(json['images']),
       id: json['_id'] ?? '',
