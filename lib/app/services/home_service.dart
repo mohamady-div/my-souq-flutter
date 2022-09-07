@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/product.dart';
 import 'package:my_souq/components/declarations.dart';
@@ -18,7 +17,7 @@ class HomeService {
     List<Product> productsList = [];
     try {
       http.Response res = await http.get(
-        Uri.parse('$myUri01/api/get-products?category$category'),
+        Uri.parse('$myUri01/api/get-products?category=$category'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'my-souq-auth-token': userProvider.user.token

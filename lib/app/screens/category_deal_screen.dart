@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/models/product.dart';
+import 'package:my_souq/app/services/home_service.dart';
+import 'package:my_souq/app/widgets/loader.dart';
+import 'package:my_souq/app/widgets/single_product.dart';
 import 'package:my_souq/components/declarations.dart';
 
 class CategoryDealScreen extends StatefulWidget {
@@ -12,6 +16,23 @@ class CategoryDealScreen extends StatefulWidget {
 }
 
 class _CategoryDealScreenState extends State<CategoryDealScreen> {
+  List<Product>? productList;
+  HomeService homeService = HomeService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchCategories();
+  }
+
+  fetchCategories() async {
+    productList = await homeService.getCategoryProducts(
+        context: context,
+        category: widget.category);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,25 +52,47 @@ class _CategoryDealScreenState extends State<CategoryDealScreen> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 10,),
-          SingleChildScrollView(
-            child: GridView.builder(
-                scrollDirection: Axis.vertical,
-                padding: const EdgeInsets.only(left: 10),
-                itemCount: 10,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.4,
-                    mainAxisSpacing: 10
-                ),
-                itemBuilder: (context, index) {
-                  return const Text('data');
-                }
-            ),
-          )
-        ],
+      body: productList == null ? const Loader() :
+      GridView.builder(
+          padding: const EdgeInsets.only(top: 10),
+          itemCount: productList!.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          itemBuilder: (context, index) {
+            final product = productList![index];
+            return Column(
+                children: [
+                  SizedBox(
+                    height: 140,
+                    child: SingleProduct(
+                      image: product.images[0],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              product.name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                          )
+                      ),
+                      Text(
+                        '${product.price} EGP',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  )
+                ]
+            );
+          }
       ),
     );
   }
