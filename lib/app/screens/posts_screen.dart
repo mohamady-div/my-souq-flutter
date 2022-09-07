@@ -4,6 +4,7 @@ import 'package:my_souq/app/screens/add_products.dart';
 import 'package:my_souq/app/services/admin_service.dart';
 import 'package:my_souq/app/widgets/loader.dart';
 import 'package:my_souq/app/widgets/single_product.dart';
+import 'package:my_souq/components/utils.dart';
 
 class PostsScreen extends StatefulWidget {
   const PostsScreen({Key? key}) : super(key: key);
@@ -73,7 +74,15 @@ class _PostsScreenState extends State<PostsScreen> {
                             ),
                             IconButton(
                                 onPressed: () {
-                                  deleteProduct(theProduct, index);
+                                  showAlertDialog(
+                                    context,
+                                    () {
+                                      deleteProduct(theProduct, index);
+                                      Navigator.pop(context);
+                                    },
+                                    'Delete Product',
+                                    'Are you sure? to delete this product',
+                                  );
                                 },
                                 icon: const Icon(Icons.delete_outline)
                             )
