@@ -6,6 +6,8 @@ import 'package:my_souq/app/models/product.dart';
 import 'package:my_souq/app/services/product_services.dart';
 import 'package:my_souq/app/widgets/stars_bar.dart';
 import 'package:my_souq/components/declarations.dart';
+import 'package:my_souq/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({Key? key, required this.product}) : super(key: key);
@@ -19,6 +21,25 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final ProductServices productServices = ProductServices();
+  double avgRating = 0;
+  double userRating = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    double totalRating =0;
+    var user = Provider.of<UserProvider>(context, listen: false).user;
+    for (int i = 0; i < widget.product.rating!.length; i ++) {
+      totalRating += widget.product.rating![i].rating;
+      if ( widget.product.rating![i].userId == user.id) {
+        userRating = widget.product.rating![i].rating;
+      }
+    }
+    if (totalRating > 0) {
+      avgRating = totalRating /  widget.product.rating!.length;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +72,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Text(
                     widget.product.id!,
                   ),
-                  const StarsBar(rating: 3.5),
+                  StarsBar(rating: avgRating),
                 ],
               ),
             ),
@@ -132,7 +153,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             RatingBar.builder(
-                initialRating: 0,
+                initialRating: userRating,
                 minRating: 1,
                 direction: Axis.horizontal,
                 allowHalfRating: true,

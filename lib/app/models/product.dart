@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:my_souq/app/models/rating.dart';
+
 class Product {
 
   final String name;
@@ -10,9 +12,10 @@ class Product {
   final List<String> images;
   String? id;
   String? userId;
+  final List<Rating>? rating;
 
   Product({required this.name,required this.description,required this.price,required this.qty,required this.category,
-    required this.images, this.id, this.userId});
+    required this.images, this.id, this.userId, this.rating});
 
   factory Product.getNewEmpty() {
     return Product(
@@ -36,7 +39,8 @@ class Product {
       "category": category,
       "images": images,
       "id": id,
-      "userId": userId
+      "userId": userId,
+      "rating": rating,
     };
   }
 
@@ -50,6 +54,11 @@ class Product {
       images: List<String>.from(json['images']),
       id: json['_id'] ?? '',
       userId: json['userId'] ?? '',
+      rating: json['rating'] != null ? List<Rating>.from(
+          json['rating']?.map(
+              (x) => Rating.fromMap(x),
+          ),
+      ) : null,
     );
   }
 
