@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:my_souq/app/models/product.dart';
+import 'package:my_souq/app/services/product_services.dart';
 import 'package:my_souq/app/widgets/stars_bar.dart';
 import 'package:my_souq/components/declarations.dart';
 
@@ -17,6 +18,8 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final ProductServices productServices = ProductServices();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,11 +132,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             RatingBar.builder(
+                initialRating: 0,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4),
                 itemBuilder: (context, _) {
-                  return const Icon(Icons.star, color:  Colors.amber,);
+                  return const Icon(Icons.star, color: Colors.amber,);
                 },
                 onRatingUpdate: (rating) {
-
+                      productServices.rateProduct(
+                          context: context,
+                          product: widget.product,
+                          rating: rating
+                      );
                 }
             )
           ],
