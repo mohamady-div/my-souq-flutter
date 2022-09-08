@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/product.dart';
+import 'package:my_souq/app/screens/product_details_screen.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({Key? key, required this.product, required this.isLiked}) : super(key: key);
@@ -23,35 +24,40 @@ class ProductCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        const CircleAvatar(
-                          radius: 40,
-                          backgroundColor: Colors.amberAccent,
-                        ),
-                        Image.network(product.images[0])
-                      ],
-                    )
-                ),
-                Text(
-                    product.name,
-                   style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const Text(
-                  'Best Sale',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
-                ),
-                Text(
-                  '${product.price} \$',
-                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
-                ),
-              ],
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, ProductDetailScreen.routeName, arguments: product);
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          const CircleAvatar(
+                            radius: 40,
+                            backgroundColor: Colors.amberAccent,
+                          ),
+                          Image.network(product.images[0])
+                        ],
+                      )
+                  ),
+                  Text(
+                      product.name,
+                     style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const Text(
+                    'Best Sale',
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                  ),
+                  Text(
+                    '${product.price} \$',
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
+                  ),
+                ],
+              ),
             ),
             Positioned(
                 left: 0,

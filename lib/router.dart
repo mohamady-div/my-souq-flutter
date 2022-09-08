@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/models/product.dart';
 import 'package:my_souq/app/screens/add_products.dart';
 import 'package:my_souq/app/screens/auth_screen.dart';
 import 'package:my_souq/app/screens/category_deal_screen.dart';
 import 'package:my_souq/app/screens/home_screen.dart';
+import 'package:my_souq/app/screens/product_details_screen.dart';
 import 'package:my_souq/app/screens/search_screen.dart';
 import 'package:my_souq/app/widgets/custom_bottom_bar.dart';
 
@@ -44,6 +46,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           builder: (_) => SearchScreen(
             searchTxt: txt,
+          )
+      );
+    case ProductDetailScreen.routeName:
+      var product = routeSettings.arguments as Product;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => ProductDetailScreen(
+            product: product,
           )
       );
     default:

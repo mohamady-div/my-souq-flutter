@@ -5,8 +5,6 @@ import 'package:my_souq/app/widgets/carousal_image.dart';
 import 'package:my_souq/app/widgets/deal_of_day.dart';
 import 'package:my_souq/app/widgets/top_categories.dart';
 import 'package:my_souq/components/declarations.dart';
-import 'package:my_souq/providers/user_provider.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
