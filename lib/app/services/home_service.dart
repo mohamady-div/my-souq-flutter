@@ -38,4 +38,35 @@ class HomeService {
     }
     return productsList;
   }
+
+
+  Future<List<Product>> searchForProducts({
+    required BuildContext context,
+    required String txt
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Product> productsList = [];
+    try {
+      http.Response res = await http.get(
+        Uri.parse('$myUri01/api/get-products/search/$txt'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'my-souq-auth-token': userProvider.user.token
+        },
+      );
+
+      httpErrorHandel(response: res, context: context, onSuccess: () {
+        for (int i =0; i < jsonDecode(res.body).length; i ++) {
+          productsList.add(
+              Product.fromJson(
+                  jsonEncode(jsonDecode(res.body)[i])
+              )
+          );
+        }
+      });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return productsList;
+  }
 }

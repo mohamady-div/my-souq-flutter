@@ -3,6 +3,7 @@ import 'package:my_souq/app/screens/add_products.dart';
 import 'package:my_souq/app/screens/auth_screen.dart';
 import 'package:my_souq/app/screens/category_deal_screen.dart';
 import 'package:my_souq/app/screens/home_screen.dart';
+import 'package:my_souq/app/screens/search_screen.dart';
 import 'package:my_souq/app/widgets/custom_bottom_bar.dart';
 
 
@@ -35,6 +36,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           builder: (_) => CategoryDealScreen(
             category: category,
+          )
+      );
+    case SearchScreen.routeName:
+      var txt = routeSettings.arguments as String;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => SearchScreen(
+            searchTxt: txt,
           )
       );
     default:

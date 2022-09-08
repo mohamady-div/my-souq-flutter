@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/screens/search_screen.dart';
 import 'package:my_souq/app/widgets/address_bar.dart';
 import 'package:my_souq/app/widgets/carousal_image.dart';
 import 'package:my_souq/app/widgets/deal_of_day.dart';
@@ -18,12 +19,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  void searchForProduct(String txt) {
+     Navigator.pushNamed(context, SearchScreen.routeName, arguments: txt);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider
-        .of<UserProvider>(context)
-        .user;
-
     return Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(
@@ -42,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(7),
                       elevation: 1,
                       child: TextFormField(
+                        onFieldSubmitted: searchForProduct,
                         decoration: InputDecoration(
                             prefixIcon: InkWell(
                               onTap: () {},
