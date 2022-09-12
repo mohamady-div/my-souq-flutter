@@ -8,9 +8,11 @@ class User {
   final String address;
   final String type;
   final String token;
+  final List<dynamic> cart;
 
   User({required this.id, required this.name, required this.password
-    , required this.address, required this.type, required this.token, required this.email });
+    , required this.address, required this.type, required this.token, required this.email,
+      required this.cart});
 
   factory User.getNewEmpty() {
     return User(
@@ -21,6 +23,7 @@ class User {
       type: '',
       token: '',
       email: '',
+      cart: []
     );
   }
 
@@ -32,7 +35,8 @@ class User {
       "address": address,
       "type": type,
       "token": token,
-      "email": email
+      "email": email,
+      "cart": cart
     };
   }
 
@@ -45,6 +49,11 @@ class User {
       type: json["type"] ?? '',
       token: json["token"] ?? '',
       email: json["email"] ?? '',
+      cart: List<Map<String, dynamic>>.from(
+        json['cart']?.map(
+            (x) => Map<String, dynamic>.from(x),
+        ),
+      )
     );
   }
 

@@ -15,13 +15,7 @@ class AuthService {
   void signUpUser(
       {required BuildContext context, required String email, required String password, required String name}) async {
     try {
-      User user = User(id: '',
-          name: name,
-          password: password,
-          address: '',
-          type: '',
-          token: '',
-          email: email);
+      User user = User.getNewEmpty();
 
       http.Response res = await http.post(
           Uri.parse('$myUri01/api/signup'),

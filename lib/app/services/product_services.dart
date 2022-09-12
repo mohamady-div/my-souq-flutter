@@ -37,4 +37,32 @@ class ProductServices {
       showSnackBar(context, e.toString());
     }
   }
+
+  void addProductToCart({
+    required BuildContext context,
+    required Product product,
+    required double qty }) async {
+
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+
+      http.Response res = await http.post(
+        Uri.parse('$myUri01/api/add-to-cart'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'my-souq-auth-token': userProvider.user.token
+        },
+        body: jsonEncode({
+          'id': product.id!,
+          'qty': qty,
+        }),
+      );
+
+      httpErrorHandel(response: res, context: context, onSuccess: () {
+        showSnackBar(context, 'product has been added successfully');
+      });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 }
