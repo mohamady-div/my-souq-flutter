@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/models/user.dart';
 import 'package:my_souq/components/utils.dart';
 import 'package:my_souq/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -59,6 +60,10 @@ class ProductServices {
       );
 
       httpErrorHandel(response: res, context: context, onSuccess: () {
+        User user = userProvider.user.copyWith(
+          cart: jsonDecode(res.body)['cart'],
+        );
+        userProvider.setObjectUser(user);
         showSnackBar(context, 'product has been added successfully');
       });
     } catch (e) {

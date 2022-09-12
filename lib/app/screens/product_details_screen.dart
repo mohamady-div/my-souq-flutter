@@ -203,6 +203,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   product: widget.product,
                   qty: 1
               );
+              Navigator.pop(context);
             },
           ),
           SpeedDialChild(
