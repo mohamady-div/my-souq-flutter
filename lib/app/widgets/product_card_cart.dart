@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/product.dart';
+import 'package:my_souq/app/services/product_services.dart';
 import 'package:my_souq/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,16 @@ class ProductCardCart extends StatefulWidget {
 }
 
 class _ProductCardCartState extends State<ProductCardCart> {
+
+  final ProductServices productServices = ProductServices();
+
+  void increaseQty(Product product) {
+    productServices.addProductToCart(context: context, product: product, qty: 1);
+  }
+
+  void decreaseQty(Product product) {
+    productServices.addProductToCart(context: context, product: product, qty: -1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +108,9 @@ class _ProductCardCartState extends State<ProductCardCart> {
                 child: Row(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        decreaseQty(product);
+                      },
                       child: Container(
                         width: 35,
                         height: 32,
@@ -124,7 +137,9 @@ class _ProductCardCartState extends State<ProductCardCart> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        increaseQty(product);
+                      },
                       child: Container(
                         width: 35,
                         height: 32,
