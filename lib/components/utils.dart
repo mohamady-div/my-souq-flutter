@@ -56,3 +56,28 @@ showAlertDialog(BuildContext context, VoidCallback onOk, String txtHead, String 
       }
   );
 }
+
+showAlertDialog2(BuildContext context, String txtHead, String txtMsg) {
+
+  Widget cancelButton = TextButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child:const Text('OK')
+  );
+
+  AlertDialog alertDialog = AlertDialog(
+    title: Text(txtHead),
+    content: Text(txtMsg),
+    actions: [
+      cancelButton,
+    ],
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      }
+  );
+}

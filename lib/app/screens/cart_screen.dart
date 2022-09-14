@@ -21,6 +21,10 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
+    int sum = 0;
+    user.cart
+        .map((e) => sum += e['qty'] * e['product']['price'] as int)
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +53,7 @@ class _CartScreenState extends State<CartScreen> {
               child: CustomButton(
                 text: 'Proceed to Buy (${user.cart.length} items)',
                 onTap: () {
-                  Navigator.pushNamed(context, AddressScreen.routeName);
+                  Navigator.pushNamed(context, AddressScreen.routeName, arguments: sum.toString());
                 },
               ),
             ),
