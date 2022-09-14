@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/screens/address_screen.dart';
 import 'package:my_souq/app/widgets/address_bar.dart';
 import 'package:my_souq/app/widgets/cart_subtotal.dart';
 import 'package:my_souq/app/widgets/custom_button.dart';
@@ -47,7 +48,9 @@ class _CartScreenState extends State<CartScreen> {
               padding: const EdgeInsets.all(8.0),
               child: CustomButton(
                 text: 'Proceed to Buy (${user.cart.length} items)',
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, AddressScreen.routeName);
+                },
               ),
             ),
             const SizedBox(height: 15),
