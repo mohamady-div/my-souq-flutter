@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/services/product_services.dart';
 import 'package:my_souq/app/widgets/custom_button.dart';
 import 'package:my_souq/app/widgets/custom_text.dart';
 import 'package:my_souq/components/declarations.dart';
@@ -19,6 +20,7 @@ class AddressScreen extends StatefulWidget {
 
 class _AddressScreenState extends State<AddressScreen> {
 
+  final ProductServices productServices = ProductServices();
   final TextEditingController addressTxt = TextEditingController();
   final TextEditingController homeTxt = TextEditingController();
   final TextEditingController areaTxt = TextEditingController();
@@ -40,7 +42,7 @@ class _AddressScreenState extends State<AddressScreen> {
     );
   }
 
-  void payPressed(String theAddress) {
+  void payPressed(String theAddress, String paymentMethod) {
     bool formOk = addressTxt.text.isNotEmpty || homeTxt.text.isNotEmpty ||
         areaTxt.text.isNotEmpty || specialTxt.text.isNotEmpty;
     if (formOk) {
@@ -56,6 +58,12 @@ class _AddressScreenState extends State<AddressScreen> {
         showAlertDialog2(context, 'Stop', 'Fill all address info');
       }
     }
+    productServices.saveUserAddress(context: context, address: theAddress);
+    productServices.setAnOrder(
+        context: context,
+        address: theAddress,
+        totalPrice: double.parse(widget.totalAmount),
+        paymentMethod: paymentMethod);
   }
 
   @override
@@ -70,10 +78,7 @@ class _AddressScreenState extends State<AddressScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var address = context
-        .watch<UserProvider>()
-        .user
-        .address;
+    var address = Provider.of<UserProvider>(context, listen: false).user.address;
 
     return Scaffold(
       appBar: AppBar(
@@ -153,7 +158,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         paymentConfigurationAsset: 'gpay.json',
                         paymentItems: _paymentItems,
                         onPaymentResult: (paymentResult) {
-                          payPressed(address);
+                          payPressed(address, "GPAY");
                         },
                         type: GooglePayButtonType.buy,
                         margin: const EdgeInsets.only(top: 15.0),
@@ -164,7 +169,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       const SizedBox(height: 10,),
                       CustomButton(
                         onTap: () {
-                          payPressed(address);
+                          payPressed(address, "CASH");
                         },
                         text: 'Cash on delivery',
                         icon: Icons.attach_money,

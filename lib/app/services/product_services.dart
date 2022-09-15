@@ -74,10 +74,75 @@ class ProductServices {
         userProvider.setObjectUser(user);
         if ( qty > 0) {
           showSnackBar(context, 'product has been added successfully');
+          Navigator.pop(context);
         }
       });
     } catch (e) {
       showSnackBar(context, e.toString());
     }
   }
+
+
+  void saveUserAddress({
+    required BuildContext context,
+    required String address }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$myUri01/api/save-user-address'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'my-souq-auth-token': userProvider.user.token
+        },
+        body: jsonEncode({
+          'address': address
+        }),
+      );
+
+      httpErrorHandel(response: res, context: context, onSuccess: () {
+        User user = userProvider.user.copyWith(
+          address: jsonDecode(res.body)['address'],
+        );
+        userProvider.setObjectUser(user);
+        //showSnackBar(context, 'Ok Address Has been Updated');
+      });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  void setAnOrder({
+    required BuildContext context,
+    required String address,
+    required double totalPrice,
+    required String paymentMethod }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$myUri01/api/order'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'my-souq-auth-token': userProvider.user.token
+        },
+        body: jsonEncode({
+          'cart': userProvider.user.cart,
+          'address': address,
+          'totalPrice': totalPrice,
+          'paymentMethod': paymentMethod
+        }),
+      );
+
+      httpErrorHandel(response: res, context: context, onSuccess: () {
+        User user = userProvider.user.copyWith(
+          cart: [],
+        );
+        userProvider.setObjectUser(user);
+        showSnackBar(context, 'Ok Order send successfully :)');
+        Navigator.pop(context);
+      });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
 }
