@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/order.dart';
+import 'package:my_souq/app/screens/order_details_screen.dart';
 import 'package:my_souq/app/services/home_service.dart';
 import 'package:my_souq/components/utils.dart';
 
@@ -70,7 +71,8 @@ class _OrdersState extends State<Orders> {
                         image: orders![i].products[0].images[0],
                         amount: orders![i].totalPrice.toString(),
                         status: orders![i].status,
-                        index: (i + 1).toString())
+                        index: (i + 1).toString(),
+                        i: i)
               ]
           ),
         ],
@@ -78,7 +80,7 @@ class _OrdersState extends State<Orders> {
     );
   }
 
-  TableRow tableRow(context, {index, image, amount,required int status}) {
+  TableRow tableRow(context, {index, image, amount,required int status, required int i}) {
     return TableRow(
         decoration: const BoxDecoration(
             border: Border(bottom: BorderSide(color: Colors.grey, width: 0.5))),
@@ -114,16 +116,22 @@ class _OrdersState extends State<Orders> {
               Text(getStatus(status)),
             ],
           ),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(100)),
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-            child: const Center(
-              child: Text(
-                "view",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.black),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, OrderDetailsScreen.routeName,
+                  arguments: orders![i]);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(100)),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+              child: const Center(
+                child: Text(
+                  "view",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
               ),
             ),
           )
