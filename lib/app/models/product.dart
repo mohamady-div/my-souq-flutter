@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:my_souq/app/models/rating.dart';
 
 class Product {
@@ -13,6 +12,7 @@ class Product {
   String? id;
   String? userId;
   final List<Rating>? rating;
+  double? selQty;
 
   Product({required this.name,required this.description,required this.price,required this.qty,required this.category,
     required this.images, this.id, this.userId, this.rating});

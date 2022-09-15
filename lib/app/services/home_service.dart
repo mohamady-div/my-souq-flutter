@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/models/order.dart';
 import 'package:my_souq/app/models/product.dart';
 import 'package:my_souq/components/declarations.dart';
 import 'package:my_souq/components/error_handling.dart';
@@ -25,7 +26,7 @@ class HomeService {
       );
 
       httpErrorHandel(response: res, context: context, onSuccess: () {
-        for (int i =0; i < jsonDecode(res.body).length; i ++) {
+        for (int i = 0; i < jsonDecode(res.body).length; i ++) {
           productsList.add(
               Product.fromJson(
                   jsonEncode(jsonDecode(res.body)[i])
@@ -56,7 +57,7 @@ class HomeService {
       );
 
       httpErrorHandel(response: res, context: context, onSuccess: () {
-        for (int i =0; i < jsonDecode(res.body).length; i ++) {
+        for (int i = 0; i < jsonDecode(res.body).length; i ++) {
           productsList.add(
               Product.fromJson(
                   jsonEncode(jsonDecode(res.body)[i])
@@ -85,7 +86,7 @@ class HomeService {
       );
 
       httpErrorHandel(response: res, context: context, onSuccess: () {
-        for (int i =0; i < jsonDecode(res.body).length; i ++) {
+        for (int i = 0; i < jsonDecode(res.body).length; i ++) {
           productsList.add(
               Product.fromJson(
                   jsonEncode(jsonDecode(res.body)[i])
@@ -99,4 +100,33 @@ class HomeService {
     return productsList;
   }
 
+  Future<List<Order>> getMyOrders({
+    required BuildContext context,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Order> orderList = [];
+
+    try {
+      http.Response res = await http.get(
+        Uri.parse('$myUri01/api/my-orders'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'my-souq-auth-token': userProvider.user.token
+        },
+      );
+      httpErrorHandel(response: res, context: context, onSuccess: () {
+        for (int i = 0; i < jsonDecode(res.body).length; i ++) {
+          orderList.add(
+              Order.fromJson(
+                  jsonEncode(jsonDecode(res.body)[i])
+              )
+          );
+        }
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+      showSnackBar(context, e.toString());
+    }
+    return orderList;
+  }
 }

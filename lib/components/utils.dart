@@ -81,3 +81,29 @@ showAlertDialog2(BuildContext context, String txtHead, String txtMsg) {
       }
   );
 }
+
+String getStatus(int value) {
+  switch(value) {
+    case 0:
+      return "preparing";
+    case 1:
+      return "Ready";
+    case 2:
+      return "On Way";
+    default:
+      return "preparing";
+  }
+}
+
+Color? getStatusColor(int value) {
+  switch(value) {
+    case 0:
+      return Colors.green;
+    case 1:
+      return Colors.blue;
+    case 2:
+      return Colors.yellowAccent;
+    default:
+      return Colors.green;
+  }
+}

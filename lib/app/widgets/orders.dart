@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_souq/app/widgets/single_product.dart';
-import 'package:my_souq/components/declarations.dart';
-
+import 'package:my_souq/app/models/order.dart';
+import 'package:my_souq/app/services/home_service.dart';
+import 'package:my_souq/components/utils.dart';
 
 class Orders extends StatefulWidget {
   const Orders({Key? key}) : super(key: key);
@@ -11,54 +11,130 @@ class Orders extends StatefulWidget {
 }
 
 class _OrdersState extends State<Orders> {
+  List<Order>? orders;
+  HomeService homeService = HomeService();
 
-  List list = [
-    'https://via.placeholder.com/150/0000FF/808080%20?Text=Digital.com',
-    'https://via.placeholder.com/150/FF0000/FFFFFF?Text=Down.com',
-    'https://via.placeholder.com/150/FFFF00/000000?Text=WebsiteBuilders.com',
-    'https://via.placeholder.com/150/000000/FFFFFF/?text=IPaddress.net'
-  ];
+  @override
+  void initState() {
+    super.initState();
+    getAllUserOrders();
+  }
+
+  void getAllUserOrders() async {
+    orders = await homeService.getMyOrders(context: context);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(left: 15),
-              child: const Text(
-                'My Orders',
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text(
+                "Orders",
                 style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                  fontSize: 22,
                 ),
+              ),
+            ],
+          ),
+          const Divider(thickness: 0.5, color: Colors.grey,),
+          Table(
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              children: [
+                // table head
+                TableRow(
+                    decoration: const BoxDecoration(
+                        border: Border(
+                            bottom:
+                            BorderSide(color: Colors.grey, width: 0.5))),
+                    children: [
+                      tableHeader("Order"),
+                      tableHeader("Amount"),
+                      tableHeader("Status"),
+                      tableHeader(""),
+                    ]),
+                //table data
+                if(orders != null)
+                  for (int i = 0; i < orders!.length; i ++)
+                    tableRow(context,
+                        image: orders![i].products[0].images[0],
+                        amount: orders![i].totalPrice.toString(),
+                        status: orders![i].status,
+                        index: (i + 1).toString())
+              ]
+          ),
+        ],
+      ),
+    );
+  }
+
+  TableRow tableRow(context, {index, image, amount,required int status}) {
+    return TableRow(
+        decoration: const BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.grey, width: 0.5))),
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 15),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(1000),
+                  child: Image.network(
+                    image,
+                    width: 30,
+                  ),
+                ),
+                const SizedBox(width: 10,),
+                Text(index)
+              ],
+            ),
+          ),
+          Text(amount),
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: getStatusColor(status)
+                ),
+                height: 10,
+                width: 10,
+              ),
+              const SizedBox(width: 10,),
+              Text(getStatus(status)),
+            ],
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(100)),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            child: const Center(
+              child: Text(
+                "view",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(right: 15),
-              child: Text(
-                'View All',
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Declarations.selectedNavBarColor
-                ),
-              ),
-            )
-          ],
-        ),
-        Container(
-          height: 170,
-          padding: const EdgeInsets.only(left: 10, right: 5, top: 20),
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: list.length, itemBuilder: ((context, index) {
-             return SingleProduct(image: list[index]);
-          }),
-          ),
-        )
-      ],
+          )
+        ]);
+  }
+
+  Widget tableHeader(text) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 15),
+      child: Text(text,
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
     );
   }
 }
