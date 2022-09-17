@@ -3,6 +3,7 @@ import 'package:my_souq/app/models/order.dart';
 import 'package:my_souq/app/models/product.dart';
 import 'package:my_souq/app/screens/add_products.dart';
 import 'package:my_souq/app/screens/address_screen.dart';
+import 'package:my_souq/app/screens/admin_screen.dart';
 import 'package:my_souq/app/screens/auth_screen.dart';
 import 'package:my_souq/app/screens/category_deal_screen.dart';
 import 'package:my_souq/app/screens/home_screen.dart';
@@ -74,6 +75,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           builder: (_) => OrderDetailsScreen(
             order: order,
           )
+      );
+    case AdminScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => const AdminScreen()
       );
     default:
       return MaterialPageRoute(

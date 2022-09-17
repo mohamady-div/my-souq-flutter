@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/screens/admin_screen.dart';
 import 'package:my_souq/app/widgets/account_button.dart';
+import 'package:my_souq/components/utils.dart';
+import 'package:my_souq/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class TopButtons extends StatefulWidget {
   const TopButtons({Key? key}) : super(key: key);
@@ -11,23 +15,10 @@ class TopButtons extends StatefulWidget {
 class _TopButtonsState extends State<TopButtons> {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
+
     return Column(
       children: [
-        Row(
-          children: [
-            AccountButton(
-              text: "My Orders",
-              onClick: () {
-              },
-            ),
-            AccountButton(
-              text: "Be Seller",
-              onClick: () {
-              },
-            )
-          ],
-        ),
-        const SizedBox(height: 10,),
         Row(
           children: [
             AccountButton(
@@ -41,7 +32,22 @@ class _TopButtonsState extends State<TopButtons> {
               },
             )
           ],
-        )
+        ),
+        const SizedBox(height: 10,),
+        Row(
+          children: [
+            AccountButton(
+              text: "admin Tools",
+              onClick: () {
+                 if (user.type == "admin") {
+                    Navigator.pushNamed(context, AdminScreen.routeName);
+                 } else {
+                   showAlertDialog2(context, 'Stop', 'you don\'t have an access permission');
+                 }
+              },
+            )
+          ],
+        ),
       ],
     );
   }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_souq/app/screens/admin_orders_screen.dart';
 import 'package:my_souq/app/screens/posts_screen.dart';
 import 'package:my_souq/components/declarations.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({Key? key}) : super(key: key);
+
+  static const String routeName = "/admin-screen";
 
   @override
   State<AdminScreen> createState() => _AdminScreenState();
@@ -16,7 +19,7 @@ class _AdminScreenState extends State<AdminScreen> {
   List<Widget> pages = [
     const PostsScreen(),
     const Center(child: Text('Analytics Page')),
-    const Center(child: Text('Items Page')),
+    const AdminOrdersScreen(),
   ];
 
   void updatePage(int page) {
@@ -64,7 +67,7 @@ class _AdminScreenState extends State<AdminScreen> {
           ),
           getNavBottom(
               icon: Icons.all_inbox_outlined,
-              title: 'Items',
+              title: 'Orders',
               index: 2,
           ),
         ],
