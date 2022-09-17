@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/order.dart';
+import 'package:my_souq/app/services/admin_service.dart';
+import 'package:my_souq/app/widgets/custom_button.dart';
 import 'package:my_souq/components/declarations.dart';
+import 'package:my_souq/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   const OrderDetailsScreen({Key? key, required this.order}) : super(key: key);
@@ -14,6 +18,7 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   int currentState = 0;
+  AdminService adminService = AdminService();
 
   @override
   void initState() {
@@ -22,8 +27,22 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     currentState = widget.order.status;
   }
 
+  void updateOrderScreen(int status, Order order) {
+    adminService.changeOrderStatus(
+        context: context,
+        status: status + 1,
+        order: order,
+        onSuccess: () {
+          setState(() {
+            currentState += 1;
+          });
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
@@ -142,7 +161,16 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   child: Stepper(
                     currentStep: currentState,
                     controlsBuilder: (context, details) {
-                      return const SizedBox();
+                      if (user.type == "admin") {
+                         return CustomButton(
+                           text: 'Done',
+                           onTap: () {
+                              updateOrderScreen(details.currentStep,widget.order);
+                           },
+                         );
+                      } else {
+                        return const SizedBox();
+                      }
                     },
                     steps: [
                       Step(

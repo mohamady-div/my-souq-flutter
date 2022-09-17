@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/order.dart';
+import 'package:my_souq/app/screens/order_details_screen.dart';
 import 'package:my_souq/app/services/admin_service.dart';
 import 'package:my_souq/app/widgets/loader.dart';
 import 'package:my_souq/components/utils.dart';
@@ -119,7 +120,8 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
           ),
           InkWell(
             onTap: () {
-
+              Navigator.pushNamed(context, OrderDetailsScreen.routeName,
+                  arguments: orders![i]);
             },
             child: Container(
               decoration: BoxDecoration(
