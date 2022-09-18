@@ -4,6 +4,7 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/order.dart';
 import 'package:my_souq/app/models/product.dart';
+import 'package:my_souq/app/models/sales.dart';
 import 'package:my_souq/components/declarations.dart';
 import 'package:my_souq/components/error_handling.dart';
 import 'package:my_souq/components/utils.dart';
@@ -162,5 +163,44 @@ class AdminService {
     } catch (e) {
       showSnackBar(context, e.toString());
     }
+  }
+
+  Future<Map<String, dynamic>> getTotalSales(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Sales> sales = [];
+    double totalSales = 0;
+    double totalOrders = 0;
+    double totalProducts = 0;
+    try {
+      http.Response res = await http.get(
+        Uri.parse('$myUri01/admin/analytics'),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'my-souq-auth-token': userProvider.user.token
+        },
+      );
+
+      httpErrorHandel(response: res, context: context, onSuccess: () {
+        var result = jsonDecode(res.body);
+        totalSales = Declarations.checkDouble(result['totalSales'] ?? 0.0);
+        totalOrders = Declarations.checkDouble(result['totalOrders'] ?? 0.0);
+        totalProducts = Declarations.checkDouble(result['totalProducts'] ?? 0.0);
+        sales = [
+          Sales(label: 'Mobiles', totalSale: Declarations.checkDouble(result['catMobiles'] ?? 0.0)),
+          Sales(label: 'Appliances', totalSale: Declarations.checkDouble(result['catAppliances'] ?? 0.0)),
+          Sales(label: 'Fashion', totalSale: Declarations.checkDouble(result['catFashion'] ?? 0.0)),
+          Sales(label: 'Essentials', totalSale: Declarations.checkDouble(result['catEssentials'] ?? 0.0)),
+          Sales(label: 'Computers', totalSale: Declarations.checkDouble(result['catComputers'] ?? 0.0)),
+        ];
+      });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return {
+      'sales': sales,
+      'totalSales': totalSales,
+      'totalOrders': totalOrders,
+      'totalProducts':totalProducts
+    };
   }
 }

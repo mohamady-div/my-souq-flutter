@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/screens/admin_orders_screen.dart';
+import 'package:my_souq/app/screens/analytics_screen.dart';
 import 'package:my_souq/app/screens/posts_screen.dart';
 import 'package:my_souq/components/declarations.dart';
 
@@ -18,7 +19,7 @@ class _AdminScreenState extends State<AdminScreen> {
 
   List<Widget> pages = [
     const PostsScreen(),
-    const Center(child: Text('Analytics Page')),
+    const AnalyticsScreen(),
     const AdminOrdersScreen(),
   ];
 
