@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/services/auth_service.dart';
 import 'package:my_souq/components/declarations.dart';
-
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
 
@@ -53,97 +52,136 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Declarations.greyBackgroundColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                  'Welcome',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              ListTile(
-                tileColor: _auth == AuthEnum.signup ? Declarations.backgroundColor : Declarations.greyBackgroundColor,
-                title: const Text("New Customer", style: TextStyle(fontWeight: FontWeight.bold),),
-                leading: Radio(
-                  activeColor: Declarations.secondaryColor,
-                  value: AuthEnum.signup,
-                  groupValue: _auth,
-                  onChanged: (AuthEnum? val) {
-                    setState(() {
-                        _auth = val ?? AuthEnum.signup;
-                    });
-                  },
-                ),
-              ),
-              if (_auth == AuthEnum.signup)
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  color: Declarations.backgroundColor,
-                  child: Form(
-                      key: _signUpKey,
-                      child: Column (
-                          children: [
-                            CustomText(controller: _nameTxt, hinTxt: 'fullName',),
-                            const SizedBox(height: 10,),
-                            CustomText(controller: _emailTxt, hinTxt: 'Email',),
-                            const SizedBox(height: 10,),
-                            CustomText(controller: _passwordTxt, hinTxt: 'password',),
-                            const SizedBox(height: 10,),
-                            CustomButton(text: "Sign Up" , onTap: () {
-                              if (_signUpKey.currentState!.validate()) {
-                                signUpUser();
-                              }
-                            },
-                            )
-                          ],
-                      )
+        backgroundColor: Declarations.greyBackgroundColor,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Welcome',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-              ListTile(
-                tileColor: _auth == AuthEnum.signin ? Declarations.backgroundColor : Declarations.greyBackgroundColor,
-                title: const Text("Have an account ?", style: TextStyle(fontWeight: FontWeight.bold),),
-                leading: Radio(
-                  activeColor: Declarations.secondaryColor,
-                  value: AuthEnum.signin,
-                  groupValue: _auth,
-                  onChanged: (AuthEnum? val) {
-                    setState(() {
-                      _auth = val ?? AuthEnum.signin;
-                    });
-                  },
-                ),
-              ),
-              if (_auth == AuthEnum.signin)
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  color: Declarations.backgroundColor,
-                  child: Form(
-                      key: _signInKey,
-                      child: Column (
-                        children: [
-                          CustomText(controller: _emailTxt, hinTxt: 'Email',),
-                          const SizedBox(height: 10,),
-                          CustomText(controller: _passwordTxt, hinTxt: 'password',),
-                          const SizedBox(height: 10,),
-                          CustomButton(text: "Sign In" , onTap: () {
-                            if (_signInKey.currentState!.validate()) {
-                              signInUser();
-                            }
-                          }, )
-                        ],
-                      )
+                  ListTile(
+                    tileColor: _auth == AuthEnum.signup ? Colors.blueGrey : Declarations.greyBackgroundColor,
+                    title: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _auth = AuthEnum.signup;
+                        });
+                      },
+                      child: Text("New Customer", style:
+                      TextStyle(
+                          color: _auth == AuthEnum.signup ? Colors.amber : Colors.black,
+                          fontWeight: FontWeight.bold
+                      ),
+                      ),
+                    ),
+                    leading:GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _auth = AuthEnum.signup;
+                        });
+                      },
+                      child: Icon (
+                      Icons.fiber_new_outlined,
+                      color: _auth == AuthEnum.signup ? Colors.amber : Colors.black,
                   ),
-                ),
-            ],
+                    ),
+                  ),
+                  if (_auth == AuthEnum.signup)
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Declarations.backgroundColor,
+                      child: Form(
+                          key: _signUpKey,
+                          child: Column(
+                            children: [
+                              CustomText(
+                                controller: _nameTxt, hinTxt: 'fullName', icon: Icons.person_outline,),
+                              const SizedBox(height: 10,),
+                              CustomText(controller: _emailTxt, hinTxt: 'Email',icon: Icons.email_outlined),
+                              const SizedBox(height: 10,),
+                              CustomText(
+                                controller: _passwordTxt,
+                                hinTxt: 'password',
+                                icon: Icons.password_outlined,
+                                isPassword: true,
+                              ),
+                              const SizedBox(height: 10,),
+                              CustomButton(text: "Sign Up", onTap: () {
+                                if (_signUpKey.currentState!.validate()) {
+                                  signUpUser();
+                                }
+                              },
+                              )
+                            ],
+                          )
+                      ),
+                    ),
+                  ListTile(
+                    tileColor: _auth == AuthEnum.signin ? Colors.blueGrey : Declarations.greyBackgroundColor,
+                    title: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _auth = AuthEnum.signin;
+                        });
+                      },
+                      child: Text("Have an account ?",
+                        style: TextStyle(
+                          color: _auth == AuthEnum.signin ? Colors.amber : Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    leading:GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _auth = AuthEnum.signin;
+                        });
+                      },
+                      child: Icon (
+                        Icons.accessibility_new_outlined,
+                        color: _auth == AuthEnum.signin ? Colors.amber : Colors.black,
+                      ),
+                    ),
+                  ),
+                  if (_auth == AuthEnum.signin)
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Declarations.backgroundColor,
+                      child: Form(
+                          key: _signInKey,
+                          child: Column(
+                            children: [
+                              CustomText(controller: _emailTxt, hinTxt: 'Email', icon: Icons.email_outlined),
+                              const SizedBox(height: 10,),
+                              CustomText(
+                                controller: _passwordTxt,
+                                  hinTxt: 'password',
+                                  icon: Icons.password_outlined,
+                                isPassword: true,
+                              ),
+                              const SizedBox(height: 10,),
+                              CustomButton(text: "Sign In", onTap: () {
+                                if (_signInKey.currentState!.validate()) {
+                                  signInUser();
+                                }
+                              },)
+                            ],
+                          )
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
         ),
-      )
     );
   }
 }

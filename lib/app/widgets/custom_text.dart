@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CustomText extends StatelessWidget {
+class CustomText extends StatefulWidget {
   const CustomText({Key? key,
     required this.controller,
     required this.hinTxt,
     this.maxLines = 1,
-    this.icon
+    this.icon,
+    this.isPassword = false
   })
       : super(key: key);
 
@@ -13,14 +14,38 @@ class CustomText extends StatelessWidget {
   final String hinTxt;
   final int maxLines;
   final IconData? icon;
+  final bool isPassword;
+
+  @override
+  State<CustomText> createState() => _CustomTextState();
+}
+
+class _CustomTextState extends State<CustomText> {
+  bool invisible = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    invisible == widget.isPassword;
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
+      obscureText: invisible,
+      controller: widget.controller,
       decoration: InputDecoration(
-        prefixIcon: icon != null ? Icon(icon) : null,
-        hintText: hinTxt,
+        prefixIcon: widget.icon != null ? Icon(widget.icon) : null,
+        suffixIcon: widget.isPassword ? IconButton(
+            onPressed: () {
+               setState(() {
+                 invisible = !invisible;
+               });
+            },
+            icon: Icon(invisible ? Icons.visibility_off_outlined : Icons.visibility_outlined)
+        )  : null ,
+        hintText: widget.hinTxt,
         border: const OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.black38,
@@ -34,11 +59,11 @@ class CustomText extends StatelessWidget {
       ),
       validator: (val) {
         if ( val == null || val.isEmpty) {
-          return 'Enter your $hinTxt';
+          return 'Enter your ${widget.hinTxt}';
         }
         return null;
       },
-      maxLines: maxLines,
+      maxLines: widget.maxLines,
     );
   }
 }
