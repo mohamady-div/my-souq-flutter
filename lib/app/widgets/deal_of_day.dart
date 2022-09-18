@@ -4,6 +4,7 @@ import 'package:my_souq/app/screens/product_details_screen.dart';
 import 'package:my_souq/app/services/home_service.dart';
 import 'package:my_souq/app/widgets/loader.dart';
 import 'package:my_souq/app/widgets/product_card_horizontal.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DealOfDay extends StatefulWidget {
   const DealOfDay({Key? key}) : super(key: key);
@@ -34,11 +35,12 @@ class _DealOfDayState extends State<DealOfDay> {
     return Column(
       children: [
         Container(
-          alignment: Alignment.topLeft,
+          alignment:AppLocalizations.of(context)!.localeName == 'ar' ?
+          Alignment.topRight : Alignment.topLeft  ,
           padding: const EdgeInsets.only(left: 10, top: 15),
-          child: const Text(
-            'Deal of the day',
-            style: TextStyle(fontSize: 20),
+          child:  Text(
+            AppLocalizations.of(context)!.dealOfTheDay,
+            style: const TextStyle(fontSize: 20),
           ),
         ),
         SizedBox(

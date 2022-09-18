@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/product.dart';
 import 'package:my_souq/app/services/home_service.dart';
 import 'package:my_souq/app/widgets/loader.dart';
-import 'package:my_souq/app/widgets/single_product.dart';
 import 'package:my_souq/components/declarations.dart';
+import '../widgets/product_card.dart';
 
 class CategoryDealScreen extends StatefulWidget {
   const CategoryDealScreen({Key? key, required this.category}) : super(key: key);
@@ -61,37 +61,7 @@ class _CategoryDealScreenState extends State<CategoryDealScreen> {
           ),
           itemBuilder: (context, index) {
             final product = productList![index];
-            return Column(
-                children: [
-                  SizedBox(
-                    height: 140,
-                    child: SingleProduct(
-                      image: product.images[0],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              product.name,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          )
-                      ),
-                      Text(
-                        '${product.price} EGP',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold
-                        ),
-                      ),
-                    ],
-                  )
-                ]
-            );
+            return ProductCard(isLiked: false,product: product,);
           }
       ),
     );

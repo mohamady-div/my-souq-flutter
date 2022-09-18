@@ -6,6 +6,7 @@ import 'package:my_souq/app/screens/home_screen.dart';
 import 'package:my_souq/components/declarations.dart';
 import 'package:my_souq/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/bar-home';
@@ -46,19 +47,19 @@ class _BottomBarState extends State<BottomBar> {
         items: [
           getNavBottom(
               icon: Icons.home_outlined,
-              title: 'Home',
+              title: AppLocalizations.of(context)!.home,
               index: 0,
               ifCart: false
           ),
           getNavBottom(
             icon: Icons.person_outline_outlined,
-            title: 'Account',
+            title: AppLocalizations.of(context)!.account,
             index: 1,
             ifCart: false
           ),
           getNavBottom(
               icon: Icons.shopping_cart,
-              title: 'Cart',
+              title: AppLocalizations.of(context)!.cart,
               index: 2,
               ifCart: true,
               cartCount: cartCount

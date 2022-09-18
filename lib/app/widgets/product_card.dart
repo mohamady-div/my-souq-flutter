@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/product.dart';
 import 'package:my_souq/app/screens/product_details_screen.dart';
+import 'package:my_souq/components/utils.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({Key? key, required this.product, required this.isLiked}) : super(key: key);
 
   final Product product;
   final bool isLiked;
+
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  bool _isLiked = false ;
+
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +40,7 @@ class ProductCard extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, ProductDetailScreen.routeName, arguments: product);
+                Navigator.pushNamed(context, ProductDetailScreen.routeName, arguments: widget.product);
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,12 +54,12 @@ class ProductCard extends StatelessWidget {
                             radius: 40,
                             backgroundColor: Colors.amberAccent,
                           ),
-                          Image.network(product.images[0])
+                          Image.network(widget.product.images[0])
                         ],
                       )
                   ),
                   Text(
-                      product.name,
+                      widget.product.name,
                      style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Text(
@@ -53,7 +67,7 @@ class ProductCard extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
                   ),
                   Text(
-                    '${product.price} \$',
+                    '${widget.product.price} \$',
                     style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
                   ),
                 ],
@@ -64,10 +78,14 @@ class ProductCard extends StatelessWidget {
                 top: 0,
                 child: IconButton(
                   icon: Icon (
-                    isLiked ? Icons.favorite : Icons.favorite_border,
+                    _isLiked ? Icons.favorite : Icons.favorite_border,
                     color:  Colors.red,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _isLiked = !_isLiked;
+                    });
+                  },
                 )
             ),
           ],

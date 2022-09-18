@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_souq/components/declarations.dart';
 import 'package:my_souq/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddressBar extends StatelessWidget {
   const AddressBar({Key? key}) : super(key: key);
@@ -26,11 +27,13 @@ class AddressBar extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 5),
+              padding: AppLocalizations.of(context)!.localeName == 'ar' ?
+              const EdgeInsets.only(right: 5) :  const EdgeInsets.only(left: 5),
               child: Text(
-                'Address of ${user.name}, ${user.address}',
+                ' ${AppLocalizations.of(context)!.addressOf} - ${user.name}, ${user.address}',
                 style: const TextStyle(fontWeight: FontWeight.w500,),
-                overflow: TextOverflow.ellipsis,
+                overflow: AppLocalizations.of(context)!.localeName == 'ar' ?
+                TextOverflow.clip : TextOverflow.ellipsis ,
               ),
             ),
           ),

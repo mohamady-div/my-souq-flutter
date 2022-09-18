@@ -12,7 +12,6 @@ import 'package:my_souq/app/screens/product_details_screen.dart';
 import 'package:my_souq/app/screens/search_screen.dart';
 import 'package:my_souq/app/widgets/custom_bottom_bar.dart';
 
-
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
 
   switch(routeSettings.name){

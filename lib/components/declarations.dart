@@ -26,7 +26,6 @@ class Declarations {
   static var selectedNavBarColor = const Color.fromARGB(255, 41, 59, 185);
   static const unselectedNavBarColor = Color.fromARGB(255, 0, 0, 0);
 
-
   static const List<Map<String, String>> catImages = [
     {
       'title': 'Mobiles',

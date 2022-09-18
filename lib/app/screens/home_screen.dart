@@ -5,6 +5,9 @@ import 'package:my_souq/app/widgets/carousal_image.dart';
 import 'package:my_souq/app/widgets/deal_of_day.dart';
 import 'package:my_souq/app/widgets/top_categories.dart';
 import 'package:my_souq/components/declarations.dart';
+import 'package:my_souq/main.dart';
+import '../models/language.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -67,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     width: 1
                                 )
                             ),
-                            hintText: 'Search in My Souq....'
+                            hintText: AppLocalizations.of(context)!.searchInMySouq
                         ),
                       ),
                     )
@@ -76,8 +79,34 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 color: Colors.transparent,
                 height: 42,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: const Icon(Icons.mic, color: Colors.black, size: 25),
+                margin: const EdgeInsets.symmetric(horizontal: 2),
+                child: DropdownButton<Language>(
+                  underline: const SizedBox(),
+                  icon: const Icon(
+                    Icons.language,
+                    color: Colors.white,
+                  ),
+                  onChanged: (Language? language)  {
+                       if (language != null) {
+                         MyApp.setLocale(context, Locale(language.languageCode, ''));
+                       }
+                  },
+                  items: Language.languageList()
+                      .map<DropdownMenuItem<Language>>(
+                        (e) => DropdownMenuItem<Language>(
+                      value: e,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Text(
+                            e.flag,
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ).toList(),
+                ),
               )
             ],
           ),
