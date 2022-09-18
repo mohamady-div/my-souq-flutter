@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_souq/app/screens/auth_screen.dart';
 import 'package:my_souq/app/widgets/custom_bottom_bar.dart';
 import 'package:my_souq/components/declarations.dart';
 import 'package:my_souq/components/error_handling.dart';
@@ -33,14 +34,13 @@ class AuthService {
           }
       );
     } catch (err) {
-        showSnackBar(context, err.toString());
+      showSnackBar(context, err.toString());
     }
   }
 
   void signInUser(
       {required BuildContext context, required String email, required String password}) async {
     try {
-
       http.Response res = await http.post(
           Uri.parse('$myUri01/api/signin'),
           body: jsonEncode({
@@ -56,11 +56,14 @@ class AuthService {
           response: res,
           context: context,
           onSuccess: () async {
-            SharedPreferences preferences = await SharedPreferences.getInstance();
+            SharedPreferences preferences = await SharedPreferences
+                .getInstance();
             Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-            await preferences.setString("my-souq-auth-token", jsonDecode(res.body)['token']);
+            await preferences.setString(
+                "my-souq-auth-token", jsonDecode(res.body)['token']);
             //showSnackBar(context, "Success you are welcome :)");
-            Navigator.pushNamedAndRemoveUntil(context, BottomBar.routeName, (route) => false);
+            Navigator.pushNamedAndRemoveUntil(
+                context, BottomBar.routeName, (route) => false);
           }
       );
     } catch (err) {
@@ -69,14 +72,14 @@ class AuthService {
   }
 
   void getUserData(BuildContext context) async {
-    try  {
+    try {
       SharedPreferences sp = await SharedPreferences.getInstance();
       String? token = sp.getString('my-souq-auth-token');
 
-      if(token == null) {
-           sp.setString('my-souq-auth-token', '');
+      if (token == null) {
+        sp.setString('my-souq-auth-token', '');
       }
-      
+
       var resToken = await http.post(
           Uri.parse('$myUri01/isValidToken'),
           headers: <String, String>{
@@ -99,8 +102,18 @@ class AuthService {
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUser(userRes.body);
       }
-    } catch(err) {
+    } catch (err) {
       showSnackBar(context, err.toString());
+    }
+  }
+
+  void logOut(BuildContext context) async {
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      await preferences.setString('my-souq-auth-token', '');
+      Navigator.pushNamedAndRemoveUntil(context, AuthScreen.routName, (route) => false);
+    } catch (e) {
+       showSnackBar(context, e.toString());
     }
   }
 }
