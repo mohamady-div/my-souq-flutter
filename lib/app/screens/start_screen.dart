@@ -26,7 +26,7 @@ class _StartScreenState extends State<StartScreen> {
       'text': 'Have a great shopping experience'
     },
     {
-      'image': 'assets/slides/s_1.jpg',
+      'image': 'assets/slides/s_3.jpg',
       'text': 'Our products are always the best, have fun'
     }
   ];

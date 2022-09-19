@@ -177,6 +177,35 @@ class _AuthScreenState extends State<AuthScreen> {
                           )
                       ),
                     ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                            child: Image.asset(
+                              "assets/buttons/google.png",
+                              width: 260,
+                            ),
+                            onTap: () {
+
+                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        GestureDetector(
+                            child: Image.asset(
+                              "assets/buttons/fb.png",
+                              width: 260,
+                            ),
+                            onTap: () {
+
+                            }),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
