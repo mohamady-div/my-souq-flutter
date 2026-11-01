@@ -67,7 +67,8 @@ class AuthService {
           }
       );
     } catch (err) {
-      showSnackBar(context, err.toString());
+      showSnackBar(context, "Error Here : " + err.toString());
+      print("Error Here : " + err.toString());
     }
   }
 

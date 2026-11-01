@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/widgets/bottom_navigation_bar/bottom_curved_Painter.dart';
 import 'package:provider/provider.dart';
@@ -84,9 +84,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
                   shape: BoxShape.circle),
               child: Opacity(
                 opacity: isEnable ? _yController.value : 1,
-                child: ifCart ? Badge(elevation: 0,
+                child: ifCart ? badges.Badge(
                   badgeContent: Text(cartCount.toString()),
-                  badgeColor: Colors.red,
+                  badgeStyle: const badges.BadgeStyle(badgeColor: Colors.red),
                   child: Icon(icon,
                       color: isEnable
                           ? Colors.white
@@ -111,7 +111,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
             begin: Curves.easeInExpo.transform(_yController.value),
             end: inCurve.transform(_yController.value),
           ).transform(_yController.velocity.sign * 0.5 + 0.5),
-          Theme.of(context).backgroundColor),
+          Theme.of(context).scaffoldBackgroundColor),
     );
   }
 

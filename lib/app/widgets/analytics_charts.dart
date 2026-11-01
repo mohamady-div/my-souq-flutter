@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:my_souq/app/models/sales.dart';
 
@@ -14,4 +14,4 @@ class AnalyticsCharts extends StatelessWidget {
       animate: true,
     );
   }
-}
+}*/

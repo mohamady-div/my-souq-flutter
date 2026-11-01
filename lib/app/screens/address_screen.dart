@@ -153,7 +153,7 @@ class _AddressScreenState extends State<AddressScreen> {
                           hinTxt: 'Special Mark',
                           icon: Icons.mark_as_unread_outlined),
                       const SizedBox(height: 10,),
-                      GooglePayButton(
+                      /*GooglePayButton(
                         width: double.infinity,
                         paymentConfigurationAsset: 'gpay.json',
                         paymentItems: _paymentItems,
@@ -165,7 +165,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         loadingIndicator: const Center(
                           child: CircularProgressIndicator(),
                         ),
-                      ),
+                      ),*/
                       const SizedBox(height: 10,),
                       CustomButton(
                         onTap: () {

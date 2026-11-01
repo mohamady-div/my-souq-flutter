@@ -1,8 +1,6 @@
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:my_souq/app/models/sales.dart';
 import 'package:my_souq/app/services/admin_service.dart';
-import 'package:my_souq/app/widgets/analytics_charts.dart';
 import 'package:my_souq/app/widgets/loader.dart';
 
 class AnalyticsScreen extends StatefulWidget {
@@ -61,7 +59,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               fontWeight: FontWeight.bold
           ),
         ),
-        SizedBox(
+        /*SizedBox(
           height: 250,
           child: AnalyticsCharts(
             seriesList: [
@@ -77,7 +75,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               )
             ],
           ),
-        )
+        )*/
       ],
     );
   }

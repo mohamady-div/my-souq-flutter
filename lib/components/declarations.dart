@@ -6,16 +6,16 @@ class Declarations {
 
   static const appBarGradient = LinearGradient(
     colors: [
-      Color.fromARGB(255, 29, 141, 201),
-      Color.fromARGB(255, 125, 203, 221),
+      Color.fromARGB(255, 29, 109, 201),
+      Color.fromARGB(255, 125, 178, 221),
     ],
     stops: [0.5, 1.0],
   );
 
   static const appBarGradient2 = LinearGradient(
     colors: [
-      Color.fromARGB(255, 125, 203, 221),
-      Color.fromARGB(255, 29, 141, 201),
+      Color.fromARGB(255, 125, 178, 221),
+      Color.fromARGB(255, 29, 109, 201),
     ],
     stops: [0.5, 1.0],
   );

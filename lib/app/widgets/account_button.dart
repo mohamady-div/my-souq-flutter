@@ -21,7 +21,7 @@ class AccountButton extends StatelessWidget {
         child: OutlinedButton(
           onPressed: onClick,
           style: ElevatedButton.styleFrom(
-              primary: Colors.black12.withOpacity(0.03),
+              overlayColor: Colors.black12.withOpacity(0.03),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),
               )
